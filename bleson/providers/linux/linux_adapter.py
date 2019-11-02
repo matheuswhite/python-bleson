@@ -161,7 +161,7 @@ class BluetoothHCIAdapter(Adapter):
                           15,           # cmd parameters length
                           0x00a0,       # min interval
                           0x00a0,       # max interval
-                          0,            # adv type
+                          0x3,            # adv type
                           0,            # direct addr type
                           0,            # direct addr type
                           0,0,0,0,0,0,  # direct addr
@@ -186,6 +186,8 @@ class BluetoothHCIAdapter(Adapter):
     def set_advertising_data(self, data):
         padded_data = memoryview(data).tolist()
         padded_data.extend([0] * (31 - len(padded_data)))
+
+        print(f'adv data: {data}')
 
         cmd = struct.pack("<BHB" + "B31B",
                           HCI_COMMAND_PKT,
